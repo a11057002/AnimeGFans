@@ -1,19 +1,45 @@
 <template>
-	<v-app >
-		<v-app-bar app color="primary">
-			<router-link to="/">
-			<v-toolbar-title> AnimeGFans </v-toolbar-title>
+	<v-app>
+		<v-app-bar app color="primary mx-auto">
+			<router-link to="/home" class="mr-5">
+				<v-toolbar-title> AnimeGFans </v-toolbar-title>
+			</router-link>
+			<router-link to="/home">
+				<v-btn text rounded>首頁</v-btn>
 			</router-link>
 			<v-spacer />
-			<v-btn text rounded to="/">首頁</v-btn>
+			<v-text-field
+				append-icon="mdi-magnify"
+				hide-details
+				solo-inverted
+				rounded
+				style="max-width: 300px;"
+				class="ml-5"
+				v-model="keywords"
+			/>
+
 			<!-- <v-btn text rounded to="/about">About</v-btn> -->
 		</v-app-bar>
 		<v-main>
-			<router-view />
+			<v-container fluid fill-height>
+				<router-view :keywords="keywords" />
+			</v-container>
 		</v-main>
-		
+		<v-footer>
+			瀏覽人次 :
+		</v-footer>
 	</v-app>
 </template>
+
+<script>
+	export default {
+		data() {
+			return {
+				keywords: ''
+			}
+		}
+	}
+</script>
 
 <style lang="scss">
 	#app {

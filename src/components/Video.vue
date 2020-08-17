@@ -1,24 +1,28 @@
 <template>
-	<div>
-		<v-container fluid>
-			<v-row>
-				<v-col cols="12" class="white--text text-h4">
-					{{ id }}
-				</v-col>
-				<v-col
-					cols="2"
-					v-for="src in srcs"
-					:key="src"
-					@click="selectTarget(src)"
+	<v-container fluid>
+		<v-row>
+			<v-col cols="12" class="white--text text-h4">
+				{{ id }}
+			</v-col>
+			<v-col
+				v-for="src in srcs"
+				:key="src"
+				@click="selectTarget(src)"
+				md="2"
+				cols="4"
+			>
+				<v-card
+					:class="{
+						'white--text': true,
+						'blue--text': target === src,
+						selectedCard: target === src
+					}"
 				>
-					<v-card
-						:class="{ 'white--text': true, 'blue--text': target === src }"
-					>
-						{{ src.split('/').pop() }}
-					</v-card>
-				</v-col>
-			</v-row>
-		</v-container>
+					{{ src.split('/').pop() }}
+				</v-card>
+			</v-col>
+		</v-row>
+
 		<div class="height60">
 			<video
 				controls
@@ -28,7 +32,7 @@
 				controlsList="nodownload"
 			></video>
 		</div>
-	</div>
+	</v-container>
 </template>
 
 <script>
@@ -39,7 +43,7 @@
 			return {
 				srcs: [],
 				target: null,
-				ip : null
+				ip: null
 			}
 		},
 		mounted() {
@@ -88,6 +92,6 @@
 	}
 	video {
 		height: 60vh;
-		width: 50vw;
+		width: 50%;
 	}
 </style>

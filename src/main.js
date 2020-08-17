@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from './plugins/vuetify';
-import router from './router'
-import VueCoreVideoPlayer from 'vue-core-video-player'
+import vuetify from './plugins/vuetify'
+import router from './router/router'
+import store from './vuex/store'
 
 Vue.config.productionTip = false
-Vue.use(VueCoreVideoPlayer)
 
 new Vue({
-  vuetify,
+	vuetify,
   router,
-  render: h => h(App)
+  store,
+	render: (h) => h(App)
 }).$mount('#app')
