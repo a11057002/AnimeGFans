@@ -1,11 +1,9 @@
 <template>
 	<v-app>
 		<v-app-bar app color="primary mx-auto">
-			<router-link to="/home" class="mr-5">
-				<v-toolbar-title> AnimeGFans </v-toolbar-title>
-			</router-link>
+			<v-toolbar-title> AnimeGFans </v-toolbar-title>
 			<router-link to="/home">
-				<v-btn text rounded>首頁</v-btn>
+				<v-btn text rounded @click="resetPage">首頁</v-btn>
 			</router-link>
 			<v-spacer />
 			<v-text-field
@@ -16,13 +14,18 @@
 				style="max-width: 300px;"
 				class="ml-5"
 				v-model="keywords"
+				@input="resetPage"
 			/>
 
 			<!-- <v-btn text rounded to="/about">About</v-btn> -->
 		</v-app-bar>
 		<v-main>
 			<v-container fluid fill-height>
-				<router-view :keywords="keywords" />
+				<router-view
+					:keywords="keywords"
+					:page="page"
+					@update-page="updatePage"
+				/>
 			</v-container>
 		</v-main>
 		<v-footer>
@@ -35,7 +38,16 @@
 	export default {
 		data() {
 			return {
-				keywords: ''
+				keywords: '',
+				page: 1
+			}
+		},
+		methods: {
+			resetPage() {
+				this.page = 1
+			},
+			updatePage(page) {
+				this.page = page
 			}
 		}
 	}
@@ -50,16 +62,13 @@
 		color: #2c3e50;
 	}
 
-	#nav {
-		padding: 30px;
+	a {
+		font-weight: bold;
+		color: #2c3e50;
+		text-decoration: none;
 
-		a {
-			font-weight: bold;
-			color: #2c3e50;
-
-			&.router-link-exact-active {
-				color: #42b983;
-			}
+		&.router-link-exact-active {
+			color: #42b983;
 		}
 	}
 </style>

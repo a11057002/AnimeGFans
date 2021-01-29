@@ -25,7 +25,7 @@ const routes = [
 	{
 		path: '/video/:id',
 		name: 'Video',
-		component: () => import('@/components/Video.vue'),
+		component: () => import('@/components/Video.vue'), 
 		props: true,
 		meta: {
 			title: '影片播放',

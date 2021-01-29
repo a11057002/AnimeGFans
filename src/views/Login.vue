@@ -52,7 +52,7 @@
 						Password
 					</label>
 					<input
-						type="text"
+						type="password"
 						class="white--text ml-5"
 						v-model="password"
 						name="password"

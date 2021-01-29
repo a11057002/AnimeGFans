@@ -1,4 +1,4 @@
-# animegogo
+# animeGfans
 
 ## Project setup
 ```

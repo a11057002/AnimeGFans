@@ -15,11 +15,11 @@
 			</v-col>
 		</v-row>
 		
-		<!-- <h1 class='white--text' v-if="search_length==0">
+		<h1 class='white--text' v-if="search_length==0">
 			查無資料
-		</h1> -->
-		<v-col cols="12">
-		<v-pagination v-if="search_length!=0" v-model="page" total-visible="8" :length=Math.ceil(search_length/items)>
+		</h1>
+		<v-col v-else cols="12">
+		<v-pagination :value="page" :length=Math.ceil(search_length/items) @input="savePage">
 		</v-pagination>
 		</v-col>
 
@@ -37,19 +37,20 @@
 				type: String
 			},
 			page:{
-				type: Number,
-				default: 1
+				type: Number
 			}
 		},
 		data() {
 			return {
 				srcs: [],
 				ip: null,
-				items: 20
+				items: 20,
+				pageNum : 1
 			}
 		},
 		mounted() {
 			this.getIp()
+			this.pageNum = this.page
 		},
 		methods: {
 			getIp() {
@@ -62,20 +63,20 @@
 			},
 			getData() {
 				if (this.ip == '122.116.138.18')
-					axios.get('http://192.168.0.15:5567').then((res) =>
+					axios.get('https://192.168.0.149:5567').then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(a.title)
 						})
 					)
 				else
-					axios.get('http://122.116.138.18:5567').then((res) =>
+					axios.get('https://122.116.138.18:5567').then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(a.title)
 						})
 					)
 			},
-			resetPage(){
-				this.page = 1
+			savePage(page){
+				this.$emit("update-page",page)
 			}
 		},
 		computed: {
@@ -87,6 +88,7 @@
 			},
 			search_length(){
 				var matches = this.keywords.replace(/([.?*+^$[\]\\(){}|-])/g, '')
+								console.log()
 				return this.srcs
 					.filter((res) => res.toUpperCase().match(matches.toUpperCase())).length
 			}
@@ -94,7 +96,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	a {
 		text-decoration: none;
 	}

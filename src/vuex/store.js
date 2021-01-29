@@ -18,7 +18,7 @@ export default new Vuex.Store({
 	actions: {
 		login({ commit }, credentials) {
 			return axios
-				.post('http://192.168.0.15:5568/login', credentials)
+				.post('https://192.168.0.149:3000/login', credentials)
 				.then(({ data }) => {
 					// console.log('user data is:', data)
 					commit('SET_USER_DATA', data)
@@ -26,7 +26,7 @@ export default new Vuex.Store({
         },
         login1({ commit }, credentials) {
 			return axios
-				.post('http://122.116.138.18:5568/login', credentials)
+				.post('https://122.116.138.18:3000/login', credentials)
 				.then(({ data }) => {
 					// console.log('user data is:', data)
 					commit('SET_USER_DATA', data)

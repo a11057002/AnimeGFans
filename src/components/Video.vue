@@ -63,18 +63,18 @@
 			},
 			getData() {
 				if (this.ip != '122.116.138.18')
-					axios.get('http://122.116.138.18:5567/' + this.id).then((res) =>
+					axios.get('https://122.116.138.18:5567/video/' + this.id).then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(
-								'http://122.116.138.18:5567/' + this.id + '/' + a.src
+								'https://122.116.138.18:5567/video/' + this.id + '/' + a.src
 							)
 						})
 					)
 				else
-					axios.get('http://192.168.0.15:5567/' + this.id).then((res) =>
+					axios.get('https://192.168.0.149:5567/video/' + this.id).then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(
-								'http://192.168.0.15:5567/' + this.id + '/' + a.src
+								'https://192.168.0.149:5567/video/' + this.id + '/' + a.src
 							)
 						})
 					)
@@ -83,7 +83,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.height60 {
 		display: flex;
 		height: 70vh;
@@ -93,5 +93,17 @@
 	video {
 		height: 60vh;
 		width: 50%;
+	}
+	.v-card {
+		transition: opacity 0.4s ease-in-out;
+	}
+
+	.v-card:not(.on-hover) {
+		opacity: 0.4;
+	}
+
+	.v-card:hover,
+	.selectedCard {
+		opacity: 1 !important;
 	}
 </style>
