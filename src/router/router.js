@@ -25,7 +25,7 @@ const routes = [
 	{
 		path: '/video/:id',
 		name: 'Video',
-		component: () => import('@/components/Video.vue'), 
+		component: () => import('@/views/Video.vue'), 
 		props: true,
 		meta: {
 			title: '影片播放',
@@ -39,6 +39,11 @@ const routes = [
 		meta: {
 			title: '登入'
 		}
+	},
+	{
+		path:'/signup',
+		name: 'Signup',
+		component: () => import('@/views/SignUp.vue')
 	}
 ]
 
@@ -49,14 +54,49 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+	const token = getCookie('token');
+	
+	if(token == null)
+		localStorage.removeItem('user')
+
 	const loggedIn = localStorage.getItem('user')
-	if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
-		next('/')
-	}
+
 	if (to.meta.title) {
 		document.title = to.meta.title
 	}
+	if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn && token == null) {
+		document.title = '登入'
+		next('/')
+		return
+	}
+	if (loggedIn && (to.path == '/' || to.path == '/login')) {
+		next('/home')
+		return
+	}
+	
 	next()
 })
+
+const getCookie = (name)=>{
+	var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+// router.beforeEach((to, from, next) => {
+// 	const loggedIn = localStorage.getItem('user')
+// 	if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
+// 		next('/')
+// 	}
+// 	if (to.meta.title) {
+// 		document.title = to.meta.title
+// 	}
+// 	next()
+// })
 
 export default router

@@ -1,23 +1,24 @@
 <template>
 	<v-app>
 		<v-app-bar app color="primary mx-auto">
-			<v-toolbar-title> AnimeGFans </v-toolbar-title>
 			<router-link to="/home">
-				<v-btn text rounded @click="resetPage">首頁</v-btn>
+				<v-toolbar-title @click="resetPage"> AnimeGFans </v-toolbar-title>
+				<!-- <v-btn text rounded @click="resetPage">首頁</v-btn> -->
 			</router-link>
 			<v-spacer />
 			<v-text-field
+				v-if="routerHome()"
 				append-icon="mdi-magnify"
 				hide-details
 				solo-inverted
 				rounded
-				style="max-width: 300px;"
-				class="ml-5"
+				style="margin-right:10px;max-width:300px;margin-left:10px;"			
 				v-model="keywords"
 				@input="resetPage"
 			/>
 
 			<!-- <v-btn text rounded to="/about">About</v-btn> -->
+			<v-btn v-if="activeUser()" @click="Logout()">登出</v-btn>
 		</v-app-bar>
 		<v-main>
 			<v-container fluid fill-height>
@@ -28,8 +29,8 @@
 				/>
 			</v-container>
 		</v-main>
-		<v-footer>
-			瀏覽人次 :
+		<v-footer v-if="this.$store.getters.loggedIn">
+			瀏覽人次 : {{ visits }}
 		</v-footer>
 	</v-app>
 </template>
@@ -48,12 +49,33 @@
 			},
 			updatePage(page) {
 				this.page = page
+			},
+			routerHome() {
+				return this.$router.history.current['path'] == '/home'
+			},
+			Logout() {
+				this.$store.dispatch('logOut').then(() => {
+					this.$router.push({ name: 'Login' })
+				})
+			},
+			activeUser(){
+				return localStorage.getItem('user')				
+			}
+		},
+		computed:{
+			visits(){
+				return this.$store.state.visits
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	html{
+		overflow: auto !important;
+	}
+
+
 	#app {
 		font-family: Avenir, Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;

@@ -15,20 +15,24 @@
 			</v-col>
 		</v-row>
 		
+		<!-- <h1 class='white--text' v-if="">
+			獲取資料中
+		</h1> -->
+
 		<h1 class='white--text' v-if="search_length==0">
 			查無資料
 		</h1>
-		<v-col v-else cols="12">
-		<v-pagination :value="page" :length=Math.ceil(search_length/items) @input="savePage">
+
+		<v-pagination v-else :value="page" :length=Math.ceil(search_length/items) @input="savePage">
 		</v-pagination>
-		</v-col>
+		
 
 	</v-container>
 </template>
 
 <script>
 	import axios from 'axios'
-
+	
 	export default {
 		name: 'Home',
 		components: {},
@@ -51,32 +55,37 @@
 		mounted() {
 			this.getIp()
 			this.pageNum = this.page
+			this.setHeader()
 		},
 		methods: {
 			getIp() {
 				fetch('https://api.ipify.org?format=json')
 					.then((x) => x.json())
 					.then(({ ip }) => {
-						this.ip = ip
+						this.ip = ip	
 						this.getData()
 					})
 			},
 			getData() {
-				if (this.ip == '122.116.138.18')
-					axios.get('https://192.168.0.149:5567').then((res) =>
+				if (this.ip == '192.168.0.149')
+					axios.get('http://192.168.0.149:3000/video').then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(a.title)
 						})
 					)
 				else
-					axios.get('https://122.116.138.18:5567').then((res) =>
+					axios.get('http://192.168.0.149:3000/video').then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(a.title)
 						})
-					)
+					)	
 			},
 			savePage(page){
 				this.$emit("update-page",page)
+			},
+			setHeader(){
+				if(this.$cookie.get('token') == undefined) this.$router.push("/")
+				axios.defaults.headers.common['Authorization'] = this.$cookie.get('token')
 			}
 		},
 		computed: {
@@ -88,7 +97,6 @@
 			},
 			search_length(){
 				var matches = this.keywords.replace(/([.?*+^$[\]\\(){}|-])/g, '')
-								console.log()
 				return this.srcs
 					.filter((res) => res.toUpperCase().match(matches.toUpperCase())).length
 			}
@@ -113,8 +121,6 @@
 	.selectedCard {
 		opacity: 1 !important;
 	}
-	.v-pagination{
-		bottom:0
-	}
+
 	
 </style>
