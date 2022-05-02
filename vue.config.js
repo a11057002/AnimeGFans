@@ -5,10 +5,11 @@ module.exports = {
     "vuetify"
   ],
   devServer:{
-    port: 8081,
+    port: 8001,
+    disableHostCheck: true,
     // https:{
     //   key:fs.readFileSync('../server/private.key'),
     //   cert:fs.readFileSync('../server/certificate.crt')
     // }
-  }
+  },
 }

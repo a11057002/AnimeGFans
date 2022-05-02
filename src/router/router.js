@@ -44,32 +44,39 @@ const routes = [
 		path:'/signup',
 		name: 'Signup',
 		component: () => import('@/views/SignUp.vue')
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		redirect: '/',
 	}
 ]
 
 const router = new VueRouter({
-	mode: 'history',
+	// mode: 'history',
+	mode: 'hash',
 	base: process.env.BASE_URL,
 	routes
 })
 
 router.beforeEach((to, from, next) => {
 	const token = getCookie('token');
-	
-	if(token == null)
-		localStorage.removeItem('user')
-
-	const loggedIn = localStorage.getItem('user')
-
 	if (to.meta.title) {
 		document.title = to.meta.title
 	}
-	if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn && token == null) {
+	if (to.matched.some((record) => record.meta.requiresAuth) && token == null) {
+		document.next = to
 		document.title = '登入'
-		next('/')
+		next('/login')
 		return
 	}
-	if (loggedIn && (to.path == '/' || to.path == '/login')) {
+	if(token && document.next != null){
+		let temp = document.next.path
+		document.next = null
+		next(temp)
+		return
+	}
+	
+	if (token && (to.path == '/' || to.path == '/login')) {
 		next('/home')
 		return
 	}

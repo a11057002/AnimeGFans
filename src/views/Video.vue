@@ -28,9 +28,12 @@
       <video
         controls
         :src="target"
-        autoplay        
-        controlsList="nodownload"
+        autoplay                      
+        download="nodownload"
       ></video>
+    </div>
+    <div>
+      <!-- Comment area -->     
     </div>
   </v-container>
 </template>
@@ -48,65 +51,26 @@ export default {
     };
   },
   mounted() {
-    this.getIp();
     this.setHeader();
+    this.getData();
   },
   methods: {
-    selectTarget(src) {
-      if (this.ip != "122.116.138.18")
+    selectTarget(src) {     
         this.target =
-          "http://192.168.0.149:3000/video/" +
+          "https://animeapi.aylu.tw/video/" +
           this.id +
           "/" +
-          src +
-          "?token=" +
-          this.$cookie.get("token");
-      else
-        this.target =
-          "http://192.168.0.149:3000/video/" +
-          this.id +
-          "/" +
-          src +
-          "?token=" +
-          this.$cookie.get("token");
+          src
+          // src +
+          // "?token=" +
+          // this.$cookie.get("token");    
     },
-    getIp() {
-      fetch("http://api.ipify.org?format=json")
-        .then((x) => x.json())
-        .then(({ ip }) => {
-          this.ip = ip;
-          this.getData();
-        });
-    },
-    getData() {
-      if (this.ip != "122.116.138.18")
-        axios.get("http://192.168.0.149:3000/video/" + this.id).then((res) =>
+    getData() {     
+        axios.get("https://animeapi.aylu.tw/video/" + this.id).then((res) =>
           res.data.forEach((a) => {
             this.srcs.push(a.src);
           })
-        );
-      else
-        axios.get("http://192.168.0.149:3000/video/" + this.id).then((res) =>
-          res.data.forEach((a) => {
-            this.srcs.push(a.src);
-          })
-        );
-      //   if (this.ip != '122.116.138.18')
-      //   	axios.get('https://122.116.138.18:3000/video/' + this.id).then((res) =>
-      //   		res.data.forEach((a) => {
-      //   			this.srcs.push(
-      //   				'https://122.116.138.18:3000/video/' + this.id + '/' + a.src + '?token=' +  this.$cookie.get('token')
-      //   			)
-      //   		})
-      //   	)
-      //   else
-      //   	axios.get('https://192.168.0.149:3000/video/' + this.id).then((res) =>
-      //   		res.data.forEach((a) => {
-      //   			this.srcs.push(
-      //   				'https://192.168.0.149:3000/video/' + this.id + '/' + a.src + '?token=' +  this.$cookie.get('token')
-      //   			)
-      //   		})
-      //   	)
+        );    
     },
     setHeader() {
       if(this.$cookie.get('token') == undefined) this.$router.push("/")
@@ -123,7 +87,6 @@ export default {
   display: flex;
   height: 70vh;
   justify-content: center;
-  /* align-items: center; */
 }
 video {
   height: 60vh;

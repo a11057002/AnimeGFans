@@ -8,7 +8,6 @@ export default new Vuex.Store({
 	state: {
 		user: null,
 		visits:null
-
 	},
 	mutations: {
 		SET_USER_DATA(state, data) {
@@ -32,17 +31,8 @@ export default new Vuex.Store({
 	actions: {
 		login({ commit }, credentials) {
 			return axios
-				.post('http://192.168.0.149:3000/login', credentials)
-				.then(({ data }) => {
-					// console.log('user data is:', data )
-					commit('SET_USER_DATA', data)
-				})
-		},
-		login1({ commit }, credentials) {
-			return axios
-				.post('http://122.116.138.18:3000/login', credentials)
-				.then(({ data }) => {
-					// console.log('user data is:', data)
+				.post('https://animeapi.aylu.tw/login', credentials)
+				.then(({ data }) => {					
 					commit('SET_USER_DATA', data)
 				})
 		},
@@ -51,7 +41,7 @@ export default new Vuex.Store({
 		},
 		createUser({ commit }, userData) {
 			console.log(commit)
-			return axios.post('http://122.116.138.18:3000/signup', userData)
+			return axios.post('https://animeapi.aylu.tw/signup', userData)
 		}
 	},
 	getters: {

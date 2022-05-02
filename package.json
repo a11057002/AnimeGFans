@@ -10,7 +10,9 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "fs": "0.0.1-security",
+    "http-server": "^14.0.0",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
     "vue-core-video-player": "^0.1.9",

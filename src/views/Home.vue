@@ -53,28 +53,13 @@
 			}
 		},
 		mounted() {
-			this.getIp()
 			this.pageNum = this.page
 			this.setHeader()
+			this.getData()
 		},
 		methods: {
-			getIp() {
-				fetch('https://api.ipify.org?format=json')
-					.then((x) => x.json())
-					.then(({ ip }) => {
-						this.ip = ip	
-						this.getData()
-					})
-			},
-			getData() {
-				if (this.ip == '192.168.0.149')
-					axios.get('http://192.168.0.149:3000/video').then((res) =>
-						res.data.forEach((a) => {
-							this.srcs.push(a.title)
-						})
-					)
-				else
-					axios.get('http://192.168.0.149:3000/video').then((res) =>
+			getData() {		
+					axios.get('https://animeapi.aylu.tw/video').then((res) =>
 						res.data.forEach((a) => {
 							this.srcs.push(a.title)
 						})
