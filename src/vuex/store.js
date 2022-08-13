@@ -11,9 +11,9 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		SET_USER_DATA(state, data) {
+			cookie.set('token', data.token,Infinity)
+			cookie.set('visits',  data.visits,Infinity)			
 			state.visits = data.visits
-			console.log(state.visits)
-			cookie.set('token', data.token,{ expires: "24h" })
 			delete data['visits']
 			delete data['token']
 			state.user = data
@@ -21,10 +21,12 @@ export default new Vuex.Store({
 		},
 		REMOVE_USER_DATA(state) {
 			state.user = null
+			state.visits = null
 			cookie.delete('token')
+			cookie.delete('visits')
 			localStorage.removeItem('user')
 		},
-		GET_VISITS(state, data) {
+		SET_VISITS(state, data) {
 			state.visits = data
 		}
 	},

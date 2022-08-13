@@ -18,22 +18,25 @@
             selectedCard: target.split('?')[0].split('/').pop()  === src,
           }"
         >
-          {{ src }}
-          <!-- {{ src.split("/").pop() }} -->
+          {{ src.split('.')[0] }}
         </v-card>
       </v-col>
     </v-row>
-
     <div v-if="target" class="height60">
-      <video
-        controls
-        :src="target"
-        autoplay                      
-        download="nodownload"
-      ></video>
+      <div class="vw-100">
+        <video
+          id="video"
+          :src="target"
+          controls
+          autoplay
+          controlslist="nodownload"
+          oncontextmenu="return false;"
+        ></video>
+      </div>
     </div>
+
     <div>
-      <!-- Comment area -->     
+      <!-- Comment area -->
     </div>
   </v-container>
 </template>
@@ -47,7 +50,7 @@ export default {
     return {
       srcs: [],
       target: "",
-      ip: null,
+      ip: null,     
     };
   },
   mounted() {
@@ -55,28 +58,26 @@ export default {
     this.getData();
   },
   methods: {
-    selectTarget(src) {     
-        this.target =
-          "https://animeapi.aylu.tw/video/" +
-          this.id +
-          "/" +
-          src
-          // src +
-          // "?token=" +
-          // this.$cookie.get("token");    
+    selectTarget(src) {
+      this.target =
+        "https://animeapi.aylu.tw/video/" +
+        this.id +
+        "/" +
+        src +
+        "?token=" +
+        this.$cookie.get("token");
     },
-    getData() {     
-        axios.get("https://animeapi.aylu.tw/video/" + this.id).then((res) =>
-          res.data.forEach((a) => {
-            this.srcs.push(a.src);
-          })
-        );    
+    getData() {
+      axios.get("https://animeapi.aylu.tw/video/" + this.id).then((res) =>
+        res.data.forEach((a) => {
+          this.srcs.push(a.src);
+        })
+      );
     },
     setHeader() {
-      if(this.$cookie.get('token') == undefined) this.$router.push("/")
-      axios.defaults.headers.common["Authorization"] = this.$cookie.get(
-        "token"
-      );
+      if (this.$cookie.get("token") == undefined) this.$router.push("/");
+      axios.defaults.headers.common["Authorization"] =
+        this.$cookie.get("token");
     },
   },
 };

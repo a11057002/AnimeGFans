@@ -5,13 +5,17 @@ import router from './router/router'
 import store from './vuex/store'
 import cookie from 'vue-cookie'
 
+
 Vue.config.productionTip = false
+Vue.use(require('vue-script2'))
 
 Vue.use(cookie)
 
+
+
 new Vue({
-	vuetify,
+  vuetify,
   router,
   store,
-	render: (h) => h(App)
+  render: (h) => h(App)
 }).$mount('#app')

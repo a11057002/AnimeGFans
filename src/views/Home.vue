@@ -22,8 +22,8 @@
 		<h1 class='white--text' v-if="search_length==0">
 			查無資料
 		</h1>
-
-		<v-pagination v-else :value="page" :length=Math.ceil(search_length/items) @input="savePage">
+				
+		<v-pagination v-else class="mt-2" :value="page" :length=Math.ceil(search_length/items) @input="savePage">
 		</v-pagination>
 		
 
@@ -107,5 +107,8 @@
 		opacity: 1 !important;
 	}
 
+	.mt-2{
+		margin-top: 2rem !important;
+	}
 	
 </style>
