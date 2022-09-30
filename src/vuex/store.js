@@ -32,6 +32,7 @@ export default new Vuex.Store({
 	},
 	actions: {
 		login({ commit }, credentials) {
+			axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 			return axios
 				.post('https://animeapi.aylu.tw/login', credentials)
 				.then(({ data }) => {					

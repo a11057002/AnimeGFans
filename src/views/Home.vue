@@ -2,10 +2,10 @@
 	<v-container>
 		<v-row align="center">
 			<v-col v-for="(src, index) in search" v-bind:key="index" md="3" cols="12">
-				<router-link :to="'/video/'+src" :v-bind:key="src">
+				<router-link :to="'/video/'+src['title']" :v-bind:key="src">
 					<v-card>
 						<v-card-title align="center" class="d-block">
-							{{ src }}
+							{{ src["title"] }}
 						</v-card-title>
 						<v-img>
 						</v-img>
@@ -47,6 +47,7 @@
 		data() {
 			return {
 				srcs: [],
+				show:[],
 				ip: null,
 				items: 20,
 				pageNum : 1
@@ -61,7 +62,8 @@
 			getData() {		
 					axios.get('https://animeapi.aylu.tw/video').then((res) =>
 						res.data.forEach((a) => {
-							this.srcs.push(a.title)
+							this.srcs.push({title:a.title,dir:a.dir})
+							this.show.push(a.dir)
 						})
 					)	
 			},
@@ -77,13 +79,15 @@
 			search() {
 				var matches = this.keywords.replace(/([.?*+^$[\]\\(){}|-])/g, '')
 				return this.srcs
-					.filter((res) => res.toUpperCase().match(matches.toUpperCase()))
+					.filter((res) => res["dir"] == true)
+					.filter((res) => res["title"].toUpperCase().match(matches.toUpperCase()))
 					.slice((this.page-1) * this.items, this.page * this.items)
 			},
 			search_length(){
 				var matches = this.keywords.replace(/([.?*+^$[\]\\(){}|-])/g, '')
 				return this.srcs
-					.filter((res) => res.toUpperCase().match(matches.toUpperCase())).length
+					.filter((res) => res["dir"] == true)
+					.filter((res) => res["title"].toUpperCase().match(matches.toUpperCase())).length
 			}
 		}
 	}

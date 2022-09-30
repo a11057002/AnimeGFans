@@ -17,7 +17,7 @@
         @input="resetPage"
       />
 
-      <!-- <v-btn text rounded to="/about">About</v-btn> -->
+      <!-- <v-btn text rounded to="/about">About</v-btn> -->      
       <v-btn v-if="activeUser()" @click="Logout()">登出</v-btn>
     </v-app-bar>
     <v-main>
@@ -77,6 +77,7 @@ export default {
         },
     },
 };
+
 </script>
 
 <style lang="scss">
