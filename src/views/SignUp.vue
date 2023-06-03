@@ -96,7 +96,7 @@
 				}
 				this.$store
 					.dispatch('createUser', {
-						username: this.username,
+						username: this.username.toLowerCase(),
 						password: this.password,
 						email: this.email
 					})

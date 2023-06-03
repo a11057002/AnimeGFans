@@ -11,8 +11,6 @@ Vue.use(require('vue-script2'))
 
 Vue.use(cookie)
 
-
-
 new Vue({
   vuetify,
   router,

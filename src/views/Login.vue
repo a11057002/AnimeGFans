@@ -10,7 +10,7 @@
 						type="text"
 						class="white--text blue-grey darken-4 rounded float-left"
 						v-model="username"
-            v-on:keyup.enter="login"
+						v-on:keyup.enter="login"
 						name="username"
 						required
 					/>
@@ -25,7 +25,7 @@
 						type="password"
 						class="white--text blue-grey darken-4 rounded float-left"
 						v-model="password"
-            v-on:keyup.enter="login"
+						v-on:keyup.enter="login"
 						name="password"
 						required
 					/>
@@ -65,7 +65,7 @@
 			login() {
 				this.$store
 					.dispatch('login', {
-						username: this.username,
+						username: this.username.toLowerCase(),
 						password: this.password
 					})
 					.then(() => {
