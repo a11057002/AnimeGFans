@@ -1,8 +1,8 @@
-# build vue web
-FROM node:12.16-alpine
-ENV BUILD_SRC=/src/
-RUN mkdir -p ${BUILD_SRC}
-COPY . ${BUILD_SRC}
-WORKDIR ${BUILD_SRC}
-RUN npm install
-CMD ["npm", "run", "serve"]
+FROM nginx
+
+WORKDIR /app
+
+COPY ./dist ./dist/
+
+COPY ./nginx /etc/nginx/conf.d
+
